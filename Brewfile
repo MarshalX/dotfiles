@@ -5,6 +5,7 @@ tap "homebrew/cask"
 tap "homebrew/core"
 tap "mongodb/brew"
 tap "sidneys/homebrew"
+
 brew "lz4"
 brew "libssh2"
 brew "readline"
@@ -43,6 +44,7 @@ brew "jq"
 brew "libmicrohttpd"
 brew "libssh"
 brew "libusbmuxd"
+brew "mas"
 brew "midnight-commander"
 brew "mkcert"
 brew "mockery"
@@ -76,6 +78,7 @@ brew "yarn"
 brew "yasm"
 brew "mongodb/brew/mongodb-community-shell"
 brew "mongodb/brew/mongodb-database-tools"
+
 cask "basictex"
 cask "ngrok"
 cask "nightfall"
@@ -87,3 +90,11 @@ cask "readdle-spark"
 cask "slack"
 cask "zoom"
 cask "telegram"
+
+mas "AdBlock Pro", id: 1018301773
+mas "GoodNotes", id: 1444383602
+mas "iStat Menus", id: 1319778037
+mas "Magnet", id: 441258766
+mas "Recess", id: 621451282
+mas "TextSniper", id: 1528890965
+mas "Xcode", id: 497799835
