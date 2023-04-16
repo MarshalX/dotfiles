@@ -55,6 +55,10 @@ Most of the soft described below you can find in my stars list: https://github.c
 - Xcode
 - Zoom
 
+### Configs
+
+Backup stored in the private cloud using `mackup beakup` ([mackup](https://github.com/lra/mackup))
+
 ### Settings
 
 TODO
