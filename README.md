@@ -22,38 +22,7 @@ Most of the soft described below you can find in my stars list: https://github.c
 - Raycast – replacement of spotlight
 - AdBlock Pro – adblock for Safari
 
-### Soft
-
-- Audacity
-- CleanMyMac X
-- DB Browser for SQLite
-- Discord
-- Docker
-- Element
-- Figma
-- Firefox
-- GoodNotes
-- Google Chrome
-- Grand Perspective
-- Hopper Disassembler
-- ILSpy
-- Insomnia
-- iTerm + iTerm Rosetta (copy with flag)
-- JetBrains Toolbox
-- OBS
-- Poedit
-- Proxyman
-- Slack
-- Spark
-- Spotify
-- Telegram
-- TinkerTool
-- Transmission
-- Visual Studio Code
-- VLC
-- Wireshark
-- Xcode
-- Zoom
+Full list is available [here](Brewfile).
 
 ### Configs
 
