@@ -55,8 +55,12 @@ Backup stored in the private cloud using `mackup beakup` ([mackup](https://githu
 - Displays -> More Space
 - Displays -> Disable "Automatically adjust brightness"
 - Displays -> Night Shift -> Custom -> From 23:00 to 5:00
+- Displays -> Advanced -> Disable "Slightly dim the display on battery"
+- Displays -> Advanced -> Enable "Prevent automatic sleeping on power adapter when the display is off"
 - Wallpaper -> select file from icloud dir -> Fill Screen
-- Lock Screen -> Start Screen Saver when inactive -> Never
+- Screen Saver (if not possible to disable) -> Hello -> Theme: minimal, disable "show hello in all langs", disable "match system appearance"
+- Screen Saver (if not possible to disable) -> Enable "Show with clock" 
+- Lock Screen -> Start Screen Saver when inactive -> Never (if not controlled by profile)
 - Lock Screen -> Turn display off on battery when inactive -> Never
 - Lock Screen -> Turn display off on power adapter when inactive -> Never
 - Touch ID & Password -> Disable Apple Watch integration if enabled
@@ -69,19 +73,54 @@ Backup stored in the private cloud using `mackup beakup` ([mackup](https://githu
 - Trackpad -> More Gestures -> App Exposé -> Swipe Down with Three Fingers
 - Printers & Scanners -> Default paper size -> A4
 
+### Finder Settings:
+- New Finder windows show -> Home
+- Sidebar -> Disable "Recent", "AirDrop", "Shared", "Recent tags"
+- Sidebar -> Enable "Home", "Pictures"
+- Advanced -> Enable "Show all filename extensions"
+- Advanced -> Enable "Remove items from the Trash after 30 days"
+- Advanced -> When performing a search -> Search the Current Folder
+
+- Apply this order of sidebar, add projects and trash folders:
+  ![Finder](.github/img/finder.png)
+
 ### Shortcuts
 
-- Keyboard -> Keyboard shortcuts -> Function Keys -> Enable "Use F1, F2, etc. keys as standard function keys"
-- TODO
+Keyboard -> Keyboard shortcuts:
+- Function Keys -> Enable "Use F1, F2, etc. keys as standard function keys"
+- Screenshots:
+  - Copy picture of screen to the clipboard: shift + cmd + \`
+  - Copy picture of selected area to the clipboard: cmd + \`
+- General -> Enable "Toggle Dark Mode"
+- Spotlight -> Disable all shortcuts
+- Accessibility -> Disable "Turn VoiceOver on or off"
+
+1password:
+- General -> Autofill: CMD + \
+- Appearance -> Density -> Compact
+- Appearance -> Always Show in Sidebar -> Disable "Tags"
+
+TextSniper:
+- Capture Text: option + \`
+- Read QR/Bar Code: option + shift + \`
 
 ### Step-by-step guide
 
-- Link Apple account
-- Install soft from sec team and so on.
-
-Brew:
-- xcode-select --install
-- export HOMEBREW_NO_INSTALL_FROM_API=1
-- /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-- add brew to .zprofile
-- call eval to run brew shell
+- Link Apple ID
+- Install soft from sec team and so on
+- Install Brew and bundle:
+  - `xcode-select --install`
+  - `export HOMEBREW_NO_INSTALL_FROM_API=1`
+  - `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"`
+  - add brew to .zprofile
+  - call eval to run brew shell
+  - `cd ~ && mkdir projects && cd projects`
+  - `git clone https://github.com/MarshalX/dotfiles.git && cd dotfiles`
+  - `brew bundle --file=Brewfile`
+- Install ohmyzsh `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"` 
+- Restore configs: `cp ~/projects/dotfiles/.mackup.cfg ~ && mackup restore`
+- Apply System Settings, Finder Settings and Shortcuts
+- Open JetBrains Toolbox and install IntelliJ IDEA, CLion, Android Studio (sync cloud settings or export + import)
+- Open installed apps and login/configure
+- Make Dock look like this: 
+![Dock](.github/img/dock.png)

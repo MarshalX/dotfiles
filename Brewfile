@@ -75,6 +75,7 @@ brew "tree"
 brew "wget"
 brew "pyenv"
 brew "pipenv"
+brew "poetry"
 brew "yarn"
 brew "mockery"
 brew "mongodb/brew/mongodb-community-shell"
@@ -130,6 +131,7 @@ mas "AdBlock Pro", id: 1018301773
 mas "GoodNotes", id: 1444383602
 mas "iStat Menus", id: 1319778037
 mas "Magnet", id: 441258766
+mas "Spark", id: 1176895641
 mas "Recess", id: 621451282
 mas "TextSniper", id: 1528890965
 mas "Xcode", id: 497799835
