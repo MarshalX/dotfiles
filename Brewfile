@@ -115,7 +115,6 @@ cask "poedit"
 cask "proxyman"
 cask "mongodb-compass"
 cask "slack"
-cask "readdle-spark"
 cask "spotify"
 cask "telegram"
 # TODO TinkerTool https://www.bresink.com/osx/0TinkerTool/download.php
