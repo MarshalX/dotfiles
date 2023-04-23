@@ -112,7 +112,7 @@ cask "iterm2"
 cask "jetbrains-toolbox"
 cask "obs"
 cask "poedit"
-cask "proxyman"
+# cask "proxyman" # install from setapp
 cask "mongodb-compass"
 cask "slack"
 cask "spotify"
