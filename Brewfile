@@ -93,6 +93,7 @@ cask "grammarly-desktop"
 cask "1password"
 cask "raycast"
 cask "the-unarchiver"
+cask "monitorcontrol"
 
 # soft
 cask "audacity"
