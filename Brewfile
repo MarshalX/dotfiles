@@ -108,6 +108,7 @@ cask "figma"
 cask "firefox"
 cask "google-chrome"
 cask "grandperspective"
+cask "deepl"
 # TODO Hopper Disassembler https://www.hopperapp.com/download
 cask "ilspy"
 cask "insomnia"
