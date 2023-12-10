@@ -86,7 +86,6 @@ brew "mongodb/brew/mongodb-database-tools"
 # casks
 # TODO AirPods Sound Quality Fixer https://github.com/stormychel/https-github.com-stormychel-airpodssoundqualityfixer
 cask "ngrok"
-cask "nightfall"
 cask "hiddenbar"
 cask "maccy"
 cask "grammarly-desktop"
