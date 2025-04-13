@@ -5,6 +5,7 @@ tap "homebrew/cask"
 tap "homebrew/core"
 tap "mongodb/brew"
 tap "sidneys/homebrew"
+tap "rbenv/tap"
 
 # libs
 brew "lz4"
@@ -50,14 +51,18 @@ brew "srtp"
 brew "wimlib"
 brew "winetricks"
 brew "yasm"
+brew "rbenv/tap/openssl@1.1"
 
 # langs
 brew "openjdk"
 brew "node"
 brew "go"
 brew "guile"
+brew "rustup"
 
 # tools
+brew "cloc"
+brew "ffmpeg"
 brew "postgresql@14"
 brew "vegeta"
 brew "watch"
@@ -131,10 +136,12 @@ cask "zoom"
 
 # App Store
 mas "AdBlock Pro", id: 1018301773
-mas "GoodNotes", id: 1444383602
+mas "Goodnotes", id: 1444383602
 mas "iStat Menus", id: 1319778037
 mas "Magnet", id: 441258766
 mas "Spark", id: 1176895641
 mas "Recess", id: 621451282
 mas "TextSniper", id: 1528890965
 mas "Xcode", id: 497799835
+mas "Tailscale", id: 1475387142
+mas "Windows App", id: 1295203466
