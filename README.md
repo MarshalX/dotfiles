@@ -7,7 +7,6 @@ Config files and settings used on my macOS powered machines
 Most of the soft described below you can find in my stars list: https://github.com/stars/MarshalX/lists/soft-tools
 
 - Magnet (paid from App Store. Open Source alternative: Rectangle) – windows manager
-- Nightfall – switch between light and dark mode by hotkey
 - Hidden Bar – menu bar cleaner
   - auto-hide after 1 min
 - Maccy – clipboard manager
@@ -16,17 +15,30 @@ Most of the soft described below you can find in my stars list: https://github.c
 - 1Password – password manager
 - TextSnipper (paid from App Store) – like default screenshot tool but capture text from anywhere on the screen
   - capture text shortcut: ⌥ + \` 
-- AirPods Sound Quality Fixer – force select const mic
 - The Unarchiver – unarchiver that supports more extensions 
 - Recess (paid from App Store) – helps take a breaks
 - Raycast – replacement of spotlight
-- AdBlock Pro – adblock for Safari
+- uBlock Origin Late – adblock for Safari
+- Tailscale – VPN
+- MonitorControl – Better support of external monitors
 
 Full list is available [here](Brewfile).
 
 ### Configs
 
-Backup stored in the private cloud using `mackup beakup` ([mackup](https://github.com/lra/mackup))
+Backup stored in the private cloud using [mackup](https://github.com/lra/mackup).
+
+Because of new macOS and how it handles symlinks we need to use this workaround:
+
+Saving configs (when leaving a machine):
+```shell
+mackup backup && mackup uninstall
+```
+
+Loading configs (on new machine): 
+```
+mackup restore && mackup uninstall
+```
 
 ### System Settings
 
@@ -118,9 +130,7 @@ TextSniper:
   - `git clone https://github.com/MarshalX/dotfiles.git && cd dotfiles`
   - `brew bundle --file=Brewfile`
 - Install ohmyzsh `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"` 
-- Restore configs: `cp ~/projects/dotfiles/.mackup.cfg ~ && mackup restore`
+- Restore configs: `cp ~/projects/dotfiles/.mackup.cfg ~ && mackup restore && mackup uninstall`
 - Apply System Settings, Finder Settings and Shortcuts
 - Open JetBrains Toolbox and install IntelliJ IDEA, CLion, Android Studio (sync cloud settings or export + import)
 - Open installed apps and login/configure
-- Make Dock look like this: 
-![Dock](.github/img/dock.png)
