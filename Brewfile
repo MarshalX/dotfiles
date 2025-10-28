@@ -89,6 +89,7 @@ brew "yarn"
 brew "mockery"
 brew "direnv"
 brew "tesseract"
+brew "autojump"
 brew "mongodb/brew/mongodb-community-shell"
 brew "mongodb/brew/mongodb-database-tools"
 
