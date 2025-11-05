@@ -102,6 +102,8 @@ cask "1password"
 cask "raycast"
 cask "the-unarchiver"
 cask "monitorcontrol"
+cask "logitech-g-hub"
+cask "scroll-reverser"
 
 # soft
 cask "audacity"
@@ -149,3 +151,4 @@ mas "TextSniper", id: 1528890965
 mas "Xcode", id: 497799835
 mas "Tailscale", id: 1475387142
 mas "Windows App", id: 1295203466
+mas "DaisyDisk", id: 411643860
