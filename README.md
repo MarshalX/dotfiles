@@ -29,16 +29,14 @@ Full list is available [here](Brewfile).
 
 Backup stored in the private cloud using [mackup](https://github.com/lra/mackup).
 
-Because of new macOS and how it handles symlinks we need to use this workaround:
-
 Saving configs (when leaving a machine):
 ```shell
-mackup backup && mackup uninstall
+mackup backup --force
 ```
 
-Loading configs (on new machine): 
-```
-mackup restore && mackup uninstall
+Loading configs (on new machine):
+```shell
+mackup restore
 ```
 
 ### zsh plugins
@@ -60,7 +58,7 @@ Things it cannot script (do these manually after running it):
 - Link Apple ID / iCloud
 - Internet Accounts → add Google account
 - Wallpaper → pick from iCloud dir, "Fill Screen"
-- Screen Saver → Hello (theme: minimal, "all languages" off, "match system appearance" off, "show with clock" on)
+- Screen Saver → Photos (style: Classic, source: Colors, shuffle slides off)
 - Displays → Night Shift → Custom 23:00 → 5:00
 - Touch ID → disable Apple Watch unlock (if enabled)
 - Default browser → Firefox (set inside Firefox or System Settings)
@@ -73,20 +71,18 @@ Things it cannot script (do these manually after running it):
 
 - Link Apple ID
 - Install soft from sec team and so on
-- Install Brew and bundle:
+- Install Homebrew and clone this repo:
   - `xcode-select --install`
   - `export HOMEBREW_NO_INSTALL_FROM_API=1`
   - `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"`
-  - add brew to .zprofile
-  - call eval to run brew shell
-  - `cd ~ && mkdir projects && cd projects`
+  - add brew to `.zprofile`, then `eval "$(/opt/homebrew/bin/brew shellenv)"`
+  - `mkdir -p ~/projects && cd ~/projects`
   - `git clone https://github.com/MarshalX/dotfiles.git && cd dotfiles`
-  - `brew bundle --file=Brewfile`
-- Install ohmyzsh `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
-- Restore configs: `cp ~/projects/dotfiles/.mackup.cfg ~ && mackup restore && mackup uninstall`
-- Apply system preferences: `./.macos` (then follow the manual checklist above)
+- Run [`./bootstrap.sh`](bootstrap.sh) — installs the Brewfile, oh-my-zsh + plugins,
+  restores mackup configs, and applies [`.macos`](.macos). Interactive (sudo, prompts).
 - Add [`IsoKeyboardRemap.workflow`](IsoKeyboardRemap.workflow) to Login Items
   (System Settings → General → Login Items → "+" → pick the `.workflow` from this repo).
   Runs on each login to apply ISO-keyboard key remaps.
-- Open JetBrains Toolbox and install IntelliJ IDEA, CLion, Android Studio (sync cloud settings or export + import)
+- Open VS Code and sign in with GitHub to sync settings
 - Open installed apps and login/configure
+- Walk the manual macOS checklist above (iCloud, wallpaper, screen saver, etc.)
