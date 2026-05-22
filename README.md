@@ -9,18 +9,19 @@ Most of the soft described below you can find in my stars list: https://github.c
 - Magnet (paid from App Store. Open Source alternative: Rectangle) – windows manager
 - Hidden Bar – menu bar cleaner
   - auto-hide after 1 min
-- Maccy – clipboard manager
-- Grammarly – fix my freaking english
 - iStat Menus (paid from App Store) – machine resources in the menu bar
 - 1Password – password manager
-- TextSnipper (paid from App Store) – like default screenshot tool but capture text from anywhere on the screen
-  - capture text shortcut: ⌥ + \` 
-- The Unarchiver – unarchiver that supports more extensions 
-- Recess (paid from App Store) – helps take a breaks
-- Raycast – replacement of spotlight
-- uBlock Origin Late – adblock for Safari
+- TextSniper (paid from App Store) – like default screenshot tool but capture text from anywhere on the screen
+  - capture text shortcut: ⌥ + \`
+- The Unarchiver – unarchiver that supports more extensions
+- Raycast – replacement of spotlight (clipboard manager, snippets, etc. built-in)
+- uBlock Origin Lite – adblock for Safari
 - Tailscale – VPN
-- MonitorControl – Better support of external monitors
+- MonitorControl – better support of external monitors
+- Mac Mouse Fix – sane mouse acceleration / button customization
+- DaisyDisk (paid from App Store) – disk usage visualizer
+- OrbStack – Docker Desktop replacement
+- Logitech G HUB – Logitech mouse/keyboard configuration
 
 Full list is available [here](Brewfile).
 
