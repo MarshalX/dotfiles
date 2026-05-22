@@ -1,0 +1,265 @@
+#!/usr/bin/env bash
+#
+# .macos — apply macOS system preferences
+#
+# Usage: ./.macos
+#
+# Idempotent: safe to re-run. Some changes require logout/restart.
+# Anything that cannot be set via `defaults`/`pmset`/`nvram` is listed under
+# MANUAL STEPS at the end.
+
+set -euo pipefail
+
+# Close System Settings so it doesn't overwrite our changes on quit
+osascript -e 'tell application "System Settings" to quit' >/dev/null 2>&1 || true
+
+# Ask for sudo upfront and keep it alive
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" 2>/dev/null || exit; done &
+SUDO_KEEPALIVE_PID=$!
+trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null || true' EXIT
+
+###############################################################################
+# General / Appearance
+###############################################################################
+
+# Orange accent + highlight colour
+defaults write NSGlobalDomain AppleAccentColor -int 1
+defaults write NSGlobalDomain AppleHighlightColor -string "1.000000 0.874510 0.701961 Orange"
+
+# Click in the scroll bar -> Jump to the spot that's clicked
+defaults write NSGlobalDomain AppleScrollerPagingBehavior -bool true
+
+# Show all file extensions everywhere
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Enable full keyboard navigation (Tab through all controls)
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# Ask to keep changes when closing documents
+defaults write NSGlobalDomain NSCloseAlwaysConfirmsChanges -bool true
+
+# Don't close windows when quitting an application
+defaults write NSGlobalDomain NSQuitAlwaysKeepsWindows -bool true
+
+# Disable smart quotes / dashes (handy for code) — leave off if you prefer them
+# defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+# defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
+###############################################################################
+# Language, region, units
+###############################################################################
+
+defaults write NSGlobalDomain AppleLanguages -array "en-US"
+defaults write NSGlobalDomain AppleLocale -string "en_US"
+defaults write NSGlobalDomain AppleMeasurementUnits -string "Centimeters"
+defaults write NSGlobalDomain AppleMetricUnits -bool true
+defaults write NSGlobalDomain AppleTemperatureUnit -string "Celsius"
+defaults write NSGlobalDomain AppleICUForce24HourTime -bool true
+# Week starts on Monday
+defaults write NSGlobalDomain AppleFirstWeekday -dict gregorian -int 2
+
+###############################################################################
+# Keyboard
+###############################################################################
+
+defaults write NSGlobalDomain KeyRepeat -int 2          # fast repeat
+defaults write NSGlobalDomain InitialKeyRepeat -int 15  # short delay
+
+# Use F1, F2, etc. as standard function keys (no media-key overlay)
+defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
+
+# fn key behaviour: 0=none, 1=change input source, 2=show emoji, 3=start dictation
+defaults write com.apple.HIToolbox AppleFnUsageType -int 3
+
+# Input sources: ABC + Russian (PC layout)
+defaults write com.apple.HIToolbox AppleEnabledInputSources -array \
+    '<dict><key>InputSourceKind</key><string>Keyboard Layout</string><key>KeyboardLayout ID</key><integer>252</integer><key>KeyboardLayout Name</key><string>ABC</string></dict>' \
+    '<dict><key>InputSourceKind</key><string>Keyboard Layout</string><key>KeyboardLayout ID</key><integer>19458</integer><key>KeyboardLayout Name</key><string>RussianWin</string></dict>' \
+    '<dict><key>Bundle ID</key><string>com.apple.CharacterPaletteIM</string><key>InputSourceKind</key><string>Non Keyboard Input Method</string></dict>' \
+    '<dict><key>Bundle ID</key><string>com.apple.PressAndHold</string><key>InputSourceKind</key><string>Non Keyboard Input Method</string></dict>'
+
+###############################################################################
+# Sound
+###############################################################################
+
+# Mute startup chime
+sudo nvram StartupMute=%01
+
+###############################################################################
+# Dock & Hot corners
+###############################################################################
+
+# Don't show recent applications
+defaults write com.apple.dock show-recents -bool false
+
+# Small dock (≈1/4 size); 16 matches current setup
+defaults write com.apple.dock tilesize -int 16
+defaults write com.apple.dock magnification -bool false
+
+# Don't auto-hide menu bar / dock (always visible)
+defaults write com.apple.dock autohide -bool false
+defaults write NSGlobalDomain _HIHideMenuBar -bool false
+
+# Enable App Exposé three-finger swipe down
+defaults write com.apple.dock showAppExposeGestureEnabled -bool true
+
+# Hot corners: 1=disabled, 2=Mission Control, 3=App windows, 4=Desktop,
+# 5=Start screen saver, 6=Disable screen saver, 7=Dashboard, 10=Lock screen,
+# 11=Launchpad, 12=Notification Center, 13=Quick Note, 14=Quick Note (alt)
+defaults write com.apple.dock wvous-tr-corner -int 12   # top-right -> Notification Center
+defaults write com.apple.dock wvous-tr-modifier -int 0
+defaults write com.apple.dock wvous-br-corner -int 14   # bottom-right -> Quick Note
+defaults write com.apple.dock wvous-br-modifier -int 0
+
+###############################################################################
+# Finder
+###############################################################################
+
+# New Finder windows open Home
+defaults write com.apple.finder NewWindowTarget -string "PfHm"
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
+
+# Search the current folder by default
+defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+
+# Empty Trash items older than 30 days
+defaults write com.apple.finder FXRemoveOldTrashItems -bool true
+
+# Show the path bar
+defaults write com.apple.finder ShowPathbar -bool true
+
+# Default view: list (Nlsv). Other options: icnv, clmv, Flwv
+defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+
+###############################################################################
+# Control Center / Menu bar visibility
+###############################################################################
+# 1 = visible in menu bar, 0 = hidden
+defaults write com.apple.controlcenter "NSStatusItem Visible WiFi"           -bool false
+defaults write com.apple.controlcenter "NSStatusItem Visible Bluetooth"      -bool false
+defaults write com.apple.controlcenter "NSStatusItem Visible NowPlaying"     -bool false
+defaults write com.apple.controlcenter "NSStatusItem Visible FocusModes"     -bool false
+defaults write com.apple.controlcenter "NSStatusItem Visible DoNotDisturb"   -bool false
+defaults write com.apple.controlcenter "NSStatusItem Visible ScreenMirroring" -bool false
+defaults write com.apple.controlcenter "NSStatusItem Visible Display"        -bool false
+defaults write com.apple.controlcenter "NSStatusItem Visible KeyboardBrightness" -bool false
+defaults write com.apple.controlcenter "NSStatusItem Visible Sound"          -bool true
+defaults write com.apple.controlcenter "NSStatusItem Visible Battery"        -bool true
+defaults write com.apple.controlcenter "NSStatusItem Visible Clock"          -bool true
+defaults write com.apple.controlcenter "NSStatusItem Visible BentoBox"       -bool true
+defaults write com.apple.controlcenter "NSStatusItem Visible UserSwitcher"   -bool true
+
+###############################################################################
+# Menu bar clock
+###############################################################################
+
+defaults write com.apple.menuextra.clock Show24Hour -bool true
+defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
+defaults write com.apple.menuextra.clock ShowSeconds -bool false
+defaults write com.apple.menuextra.clock ShowDate -int 0   # 0=when space allows, 1=always, 2=never
+defaults write com.apple.menuextra.clock FlashDateSeparators -bool false
+
+###############################################################################
+# Trackpad & Mouse
+###############################################################################
+
+# Tap-to-click off
+defaults write com.apple.AppleMultitouchTrackpad Clicking -int 0
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -int 0
+
+# Three-finger vertical swipe -> App Exposé (matches Dock setting above)
+# 0=off, 2=Mission Control / App Exposé
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerVertSwipeGesture -int 2
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerVertSwipeGesture -int 2
+
+# Three-finger drag off (set via Accessibility -> Pointer Control normally; left as-is)
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -int 0
+
+# Disable three-finger tap (Look up & data detectors). Default is 2.
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerTapGesture -int 0
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerTapGesture -int 0
+
+# Pointer acceleration off (Accessibility) + tracking speed.
+# 0.875 = macOS default (~middle of slider). Requires logout/restart.
+defaults write NSGlobalDomain com.apple.mouse.linear -bool true
+defaults write NSGlobalDomain com.apple.mouse.scaling -float 0.875
+defaults write NSGlobalDomain com.apple.trackpad.scaling -float 0.875
+
+###############################################################################
+# Keyboard shortcuts (com.apple.symbolichotkeys)
+###############################################################################
+# Modifiers: shift=131072, ctrl=262144, option=524288, cmd=1048576 (add to combine)
+#   cmd          = 1048576
+#   shift+cmd    = 1179648
+#   ctrl+cmd     = 1310720
+#   option+cmd   = 1572864
+#   ctrl+option+cmd = 1835008
+# Common keycodes: ` = 50, space = 49, F5 = 96 (used as a generic "no key" too)
+SHK=~/Library/Preferences/com.apple.symbolichotkeys.plist
+PB=/usr/libexec/PlistBuddy
+
+set_hotkey() {  # id keycode modifier
+    local id=$1 kc=$2 mod=$3
+    "$PB" -c "Delete :AppleSymbolicHotKeys:$id" "$SHK" 2>/dev/null || true
+    "$PB" -c "Add :AppleSymbolicHotKeys:$id dict" "$SHK"
+    "$PB" -c "Add :AppleSymbolicHotKeys:$id:enabled bool true" "$SHK"
+    "$PB" -c "Add :AppleSymbolicHotKeys:$id:value dict" "$SHK"
+    "$PB" -c "Add :AppleSymbolicHotKeys:$id:value:type string standard" "$SHK"
+    "$PB" -c "Add :AppleSymbolicHotKeys:$id:value:parameters array" "$SHK"
+    "$PB" -c "Add :AppleSymbolicHotKeys:$id:value:parameters:0 integer 96" "$SHK"
+    "$PB" -c "Add :AppleSymbolicHotKeys:$id:value:parameters:1 integer $kc" "$SHK"
+    "$PB" -c "Add :AppleSymbolicHotKeys:$id:value:parameters:2 integer $mod" "$SHK"
+}
+
+disable_hotkey() {  # id
+    local id=$1
+    "$PB" -c "Set :AppleSymbolicHotKeys:$id:enabled false" "$SHK" 2>/dev/null || \
+        "$PB" -c "Add :AppleSymbolicHotKeys:$id:enabled bool false" "$SHK"
+}
+
+# Screenshots: rebind to backtick
+set_hotkey 29 50 1179648   # shift+cmd+`  -> picture of screen to clipboard
+set_hotkey 31 50 1048576   # cmd+`        -> picture of selected area to clipboard
+
+# Spotlight: disable both bindings (README intent)
+disable_hotkey 60          # cmd+space
+disable_hotkey 61          # alt+cmd+space (search window)
+
+# Accessibility: disable "Turn VoiceOver on or off"
+disable_hotkey 59          # cmd+F5
+
+# Reload so changes apply without logout
+/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u 2>/dev/null || true
+
+###############################################################################
+# Display sleep / power management (Lock Screen + Displays -> Advanced)
+###############################################################################
+
+# Never sleep the display or the machine when plugged in
+sudo pmset -c displaysleep 0 sleep 0 disksleep 0
+# Prevent automatic sleeping on power adapter when the display is off
+sudo pmset -c disablesleep 1
+# Don't slightly dim the display on battery
+sudo pmset -b lessbright 0
+# Reasonable battery defaults (10 min display, no system sleep override)
+sudo pmset -b displaysleep 10
+
+###############################################################################
+# Printing
+###############################################################################
+
+defaults write NSGlobalDomain NSPaperSize -string "A4"
+
+###############################################################################
+# Restart affected apps
+###############################################################################
+
+for app in "Dock" "Finder" "SystemUIServer" "ControlCenter" "cfprefsd"; do
+    killall "$app" >/dev/null 2>&1 || true
+done
+
+cat <<'EOF'
+
+Done. Log out (or restart) for everything to fully apply.
+EOF
