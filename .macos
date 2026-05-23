@@ -69,8 +69,8 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 15  # short delay
 # Use F1, F2, etc. as standard function keys (no media-key overlay)
 defaults write NSGlobalDomain com.apple.keyboard.fnState -bool true
 
-# fn key behaviour: 0=none, 1=change input source, 2=show emoji, 3=start dictation
-defaults write com.apple.HIToolbox AppleFnUsageType -int 3
+# fn (Globe) key behaviour: 0=none, 1=change input source, 2=show emoji, 3=start dictation
+defaults write com.apple.HIToolbox AppleFnUsageType -int 0
 
 # Input sources: ABC + Russian (PC layout)
 defaults write com.apple.HIToolbox AppleEnabledInputSources -array \
@@ -222,12 +222,22 @@ disable_hotkey() {  # id
 set_hotkey 29 50 1179648   # shift+cmd+`  -> picture of screen to clipboard
 set_hotkey 31 50 1048576   # cmd+`        -> picture of selected area to clipboard
 
-# Spotlight: disable both bindings (README intent)
-disable_hotkey 60          # cmd+space
-disable_hotkey 61          # alt+cmd+space (search window)
+# Input sources:
+#   60 = Select the previous input source (default ctrl+space) -> disable
+#   61 = Select next source in Input menu (default ctrl+option+space)
+#        -> rebind to ctrl+space so it's the immediate switcher (no popup)
+disable_hotkey 60
+set_hotkey 61 49 262144    # ctrl+space -> next input source
+
+# Spotlight: disable both bindings
+disable_hotkey 64          # cmd+space        -> Show Spotlight search
+disable_hotkey 65          # alt+cmd+space    -> Show Finder search window
 
 # Accessibility: disable "Turn VoiceOver on or off"
 disable_hotkey 59          # cmd+F5
+
+# Disable Quick Note keyboard shortcut (Globe+Q)
+disable_hotkey 190
 
 # Reload so changes apply without logout
 /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u 2>/dev/null || true
